@@ -1,0 +1,44 @@
+[
+  {
+    "id": 2,
+    "title": "Zapatillas de Running",
+    "description": "Zapatillas ligeras y cómodas, perfectas para correr largas distancias.",
+    "code": "ZAPA01",
+    "price": 79.99,
+    "stock": 75,
+    "category": "Calzado Deportivo",
+    "thumbnails": [
+      "https://firebasestorage.googleapis.com/v0/b/ecommerce-reactjs-350aa.appspot.com/o/funda1.webp?alt=media&token=2cbcbc62-01af-4a75-b88f-46a804888bbb",
+      "https://firebasestorage.googleapis.com/v0/b/ecommerce-reactjs-350aa.appspot.com/o/acccanilleras1.webp?alt=media&token=8bcf6cca-5208-4e3b-a83b-b64c68631b9d"
+    ],
+    "status": true
+  },
+  {
+    "id": 3,
+    "title": "Camiseta Deportiva XXX",
+    "description": "Camiseta de manga corta hecha con material transpirable.",
+    "code": "CAMIS01",
+    "price": 29.99,
+    "stock": 350,
+    "category": "Ropa Deportiva",
+    "thumbnails": [
+      "https://firebasestorage.googleapis.com/v0/b/ecommerce-reactjs-350aa.appspot.com/o/palofibra3.webp?alt=media&token=26885d15-30e2-4149-b775-41aed5d7dedf",
+      "https://firebasestorage.googleapis.com/v0/b/ecommerce-reactjs-350aa.appspot.com/o/acccubre3.webp?alt=media&token=a312fdb2-f4a8-4a0d-b492-0328ffbf1ca3"
+    ],
+    "status": true
+  },
+  {
+    "id": 4,
+    "title": "Mochila Deportiva",
+    "description": "Mochila con múltiples compartimentos, ideal para llevar todo lo necesario al gimnasio.",
+    "code": "MOCH01",
+    "price": 49.99,
+    "stock": 120,
+    "category": "Accesorios Deportivos",
+    "thumbnails": [
+      "https://firebasestorage.googleapis.com/v0/b/ecommerce-reactjs-350aa.appspot.com/o/funda6.webp?alt=media&token=83729868-28fd-4e0a-935d-7d43e81c40d1",
+      "https://firebasestorage.googleapis.com/v0/b/ecommerce-reactjs-350aa.appspot.com/o/acccanilleras1.webp?alt=media&token=8bcf6cca-5208-4e3b-a83b-b64c68631b9d"
+    ],
+    "status": true
+  }
+]

@@ -1,18 +1,18 @@
-const express = require('express');
+import express from 'express';
+import productsRouter from './routes/products.router.js';
+
 const app = express();
-const port = 8080;
+const SERVER_PORT = 8080;
 
+ app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => {
+ app.use('/api/products', productsRouter);
+
+ app.get('/', (req, res) => {
     res.send('Bienvenido');
 });
 
-
-app.use(express.json());
-
-app.use('/api/products', require('./routes/products.router'));
- 
-
-app.listen(port, () => {
-    console.log(`Servidor escuchando en el puerto ${port}`);
+ app.listen(SERVER_PORT, () => {
+    console.log(`Servidor escuchando por el puerto: ${SERVER_PORT}`);
 });
