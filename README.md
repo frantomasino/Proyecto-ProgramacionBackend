@@ -4,16 +4,24 @@ Este proyecto es una aplicación de backend para un eCommerce, desarrollado con 
 
 ## Estructura del Proyecto
 
-├── src/
-│ ├── routes/
-│ │ └── products.router.js
-│ ├── services/
-│ │ └── ProductManager.js
+📦 tu-proyecto-ecommerce/
+├── 📂 data/
+│ ├── products.json
+│ └── carrito.json
+├── 📂 src/
+│ ├── 📂 routes/
+│ │ ├── products.router.js
+│ │ └── carts.router.js
+│ ├── 📂 services/
+│ │ ├── ProductManager.js
+│ │ └── CartManager.js
 │ └── app.js
-│
-└── data/
-└── productos.json
+├── 📂 node_modules/
+├── package.json
+├── package-lock.json
+└── README.md
 
 ## Inicio del servidor 
 
 node src/app.js
+ 

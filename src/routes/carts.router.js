@@ -1,8 +1,10 @@
-const express = require('express');
-const CartManager = require('../services/CartManager');
-const router = express.Router();
+import express from 'express';
+import CartManager from '../services/CartManager.js';
+import path from 'path';
 
-const cartManager = new CartManager('./data/carrito.json');
+const router = express.Router();
+const filePath = path.join(process.cwd(), 'data', 'carrito.json');
+const cartManager = new CartManager(filePath);
 
  router.post('/', async (req, res) => {
     try {
