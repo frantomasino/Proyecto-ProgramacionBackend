@@ -6,7 +6,7 @@ const router = express.Router();
 const filePath = path.join(process.cwd(), 'data', 'carrito.json');
 const cartManager = new CartManager(filePath);
 
- router.post('/', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const newCart = await cartManager.createCart();
         res.status(201).json(newCart);
@@ -15,10 +15,10 @@ const cartManager = new CartManager(filePath);
     }
 });
 
- router.get('/:cid', async (req, res) => {
+router.get('/:cid', async (req, res) => {
     const { cid } = req.params;
     try {
-        const cart = await cartManager.getCartById(cid);
+        const cart = await cartManager.getCartById(Number(cid));
         if (!cart) {
             return res.status(404).json({ error: 'Carrito no encontrado' });
         }
@@ -28,10 +28,10 @@ const cartManager = new CartManager(filePath);
     }
 });
 
- router.post('/:cid/product/:pid', async (req, res) => {
+router.post('/:cid/product/:pid', async (req, res) => {
     const { cid, pid } = req.params;
     try {
-        const updatedCart = await cartManager.addProductToCart(cid, pid);
+        const updatedCart = await cartManager.addProductToCart(Number(cid), Number(pid));
         if (!updatedCart) {
             return res.status(404).json({ error: 'Carrito o producto no encontrado' });
         }
@@ -41,4 +41,4 @@ const cartManager = new CartManager(filePath);
     }
 });
 
-module.exports = router;
+export default router;

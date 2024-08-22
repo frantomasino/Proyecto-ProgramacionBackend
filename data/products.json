@@ -1,19 +1,5 @@
 [
   {
-    "id": 2,
-    "title": "Zapatillas de Running",
-    "description": "Zapatillas ligeras y cómodas, perfectas para correr largas distancias.",
-    "code": "ZAPA01",
-    "price": 79.99,
-    "stock": 75,
-    "category": "Calzado Deportivo",
-    "thumbnails": [
-      "https://firebasestorage.googleapis.com/v0/b/ecommerce-reactjs-350aa.appspot.com/o/funda1.webp?alt=media&token=2cbcbc62-01af-4a75-b88f-46a804888bbb",
-      "https://firebasestorage.googleapis.com/v0/b/ecommerce-reactjs-350aa.appspot.com/o/acccanilleras1.webp?alt=media&token=8bcf6cca-5208-4e3b-a83b-b64c68631b9d"
-    ],
-    "status": true
-  },
-  {
     "id": 3,
     "title": "Camiseta Deportiva XXX",
     "description": "Camiseta de manga corta hecha con material transpirable.",
@@ -40,5 +26,60 @@
       "https://firebasestorage.googleapis.com/v0/b/ecommerce-reactjs-350aa.appspot.com/o/acccanilleras1.webp?alt=media&token=8bcf6cca-5208-4e3b-a83b-b64c68631b9d"
     ],
     "status": true
+  },
+  {
+    "0": {
+      "id": "1",
+      "name": "Producto 1",
+      "imagen": "imagen1.png",
+      "price": 1000,
+      "stock": 10,
+      "descripcion": "Descripción del producto 1",
+      "category": "categoria1"
+    },
+    "1": {
+      "id": "2",
+      "name": "Producto 2",
+      "imagen": "imagen2.png",
+      "price": 1500,
+      "stock": 20,
+      "descripcion": "Descripción del producto 2",
+      "category": "categoria2"
+    },
+    "id": 4
+  },
+  {
+    "id": 5,
+    "title": "Nueva Camiseta",
+    "description": "Camiseta cómoda y elegante",
+    "code": "CAMISA01",
+    "price": 25.99,
+    "stock": 50,
+    "category": "Ropa",
+    "thumbnails": [
+      "https://example.com/image.jpg"
+    ],
+    "status": true
+  },
+  {
+    "0": {
+      "id": "1",
+      "name": "Producto 1",
+      "imagen": "imagen1.png",
+      "price": 1000,
+      "stock": 10,
+      "descripcion": "Descripción del producto 1",
+      "category": "categoria1"
+    },
+    "1": {
+      "id": "2",
+      "name": "Producto 2",
+      "imagen": "imagen2.png",
+      "price": 1500,
+      "stock": 20,
+      "descripcion": "Descripción del producto 2",
+      "category": "categoria2"
+    },
+    "id": 5
   }
 ]

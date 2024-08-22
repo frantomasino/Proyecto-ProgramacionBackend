@@ -6,7 +6,6 @@ const router = express.Router();
 const filePath = path.join(process.cwd(), 'data', 'products.json');
 const productManager = new ProductManager(filePath);
 
-
 router.get('/', async (req, res) => {
     try {
         const products = await productManager.getProducts();
@@ -15,7 +14,6 @@ router.get('/', async (req, res) => {
         res.status(500).json({ message: 'Error al obtener productos' });
     }
 });
-
 
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
@@ -30,7 +28,6 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-
 router.post('/', async (req, res) => {
     const productData = req.body;
     try {
@@ -41,7 +38,6 @@ router.post('/', async (req, res) => {
     }
 });
 
- 
 router.put('/:id', async (req, res) => {
     const { id } = req.params;
     const updatedFields = req.body;
@@ -56,7 +52,6 @@ router.put('/:id', async (req, res) => {
     }
 });
 
- 
 router.delete('/:id', async (req, res) => {
     const { id } = req.params;
     try {
