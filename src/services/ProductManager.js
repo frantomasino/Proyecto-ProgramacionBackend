@@ -1,6 +1,6 @@
 import fs from 'fs/promises';
 
-class ProductManager {
+export default class ProductManager {
     constructor(filePath) {
         this.filePath = filePath;
     }
@@ -10,48 +10,30 @@ class ProductManager {
             const data = await fs.readFile(this.filePath, 'utf-8');
             return JSON.parse(data);
         } catch (error) {
+            console.error('Error reading products file:', error);
             return [];
         }
     }
 
-    async getProductById(id) {
-        const products = await this.getProducts();
-        return products.find(p => p.id === id);
-    }
-
     async addProduct(product) {
-        const products = await this.getProducts();
-        const newProduct = { id: products.length + 1, ...product };
-        products.push(newProduct);
-        await this.saveProducts(products);
-        return newProduct;
-    }
-
-    async updateProduct(id, updatedFields) {
-        const products = await this.getProducts();
-        const productIndex = products.findIndex(p => p.id === id);
-        if (productIndex === -1) {
-            return null;
+        try {
+            const products = await this.getProducts();
+            product.id = products.length ? Math.max(products.map(p => p.id)) + 1 : 1;
+            products.push(product);
+            await fs.writeFile(this.filePath, JSON.stringify(products, null, 2));
+            return product;
+        } catch (error) {
+            console.error('Error adding product:', error);
         }
-        products[productIndex] = { ...products[productIndex], ...updatedFields };
-        await this.saveProducts(products);
-        return products[productIndex];
     }
 
     async deleteProduct(id) {
-        let products = await this.getProducts();
-        const productIndex = products.findIndex(p => p.id === id);
-        if (productIndex === -1) {
-            return null;
+        try {
+            const products = await this.getProducts();
+            const updatedProducts = products.filter(product => product.id !== id);
+            await fs.writeFile(this.filePath, JSON.stringify(updatedProducts, null, 2));
+        } catch (error) {
+            console.error('Error deleting product:', error);
         }
-        products = products.filter(p => p.id !== id);
-        await this.saveProducts(products);
-        return true;
-    }
-
-    async saveProducts(products) {
-        await fs.writeFile(this.filePath, JSON.stringify(products, null, 2));
     }
 }
-
-export default ProductManager;

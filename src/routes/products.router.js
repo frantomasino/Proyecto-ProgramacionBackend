@@ -1,68 +1,39 @@
 import express from 'express';
 import ProductManager from '../services/ProductManager.js';
 import path from 'path';
+import { Server as IOServer } from 'socket.io';
 
 const router = express.Router();
 const filePath = path.join(process.cwd(), 'data', 'products.json');
 const productManager = new ProductManager(filePath);
+const io = new IOServer(); 
 
-router.get('/', async (req, res) => {
-    try {
-        const products = await productManager.getProducts();
-        res.json(products);
-    } catch (error) {
-        res.status(500).json({ message: 'Error al obtener productos' });
-    }
-});
 
-router.get('/:id', async (req, res) => {
-    const { id } = req.params;
-    try {
-        const product = await productManager.getProductById(Number(id));
-        if (!product) {
-            return res.status(404).json({ message: 'Producto no encontrado' });
+io.on('connection', (socket) => {
+    console.log('New WebSocket connection');
+
+    productManager.getProducts().then(products => {
+        socket.emit('updateProducts', products);
+    });
+
+    socket.on('addProduct', async (product) => {
+        try {
+            await productManager.addProduct(product);
+            const products = await productManager.getProducts();
+            io.emit('updateProducts', products);
+        } catch (error) {
+            console.error('Error adding product:', error);
         }
-        res.json(product);
-    } catch (error) {
-        res.status(500).json({ message: 'Error al obtener el producto' });
-    }
-});
+    });
 
-router.post('/', async (req, res) => {
-    const productData = req.body;
-    try {
-        const newProduct = await productManager.addProduct(productData);
-        res.status(201).json(newProduct);
-    } catch (error) {
-        res.status(500).json({ message: 'Error al crear el producto' });
-    }
-});
-
-router.put('/:id', async (req, res) => {
-    const { id } = req.params;
-    const updatedFields = req.body;
-    try {
-        const updatedProduct = await productManager.updateProduct(Number(id), updatedFields);
-        if (!updatedProduct) {
-            return res.status(404).json({ message: 'Producto no encontrado' });
+    socket.on('requestProducts', async () => {
+        try {
+            const products = await productManager.getProducts();
+            socket.emit('updateProducts', products);
+        } catch (error) {
+            console.error('Error fetching products:', error);
         }
-        res.json(updatedProduct);
-    } catch (error) {
-        res.status(500).json({ message: 'Error al actualizar el producto' });
-    }
-});
-
-router.delete('/:id', async (req, res) => {
-    const { id } = req.params;
-    try {
-        const deleted = await productManager.deleteProduct(Number(id));
-        if (!deleted) {
-            return res.status(404).json({ message: 'Producto no encontrado' });
-        }
-        res.status(204).end();
-    } catch (error) {
-        res.status(500).json({ message: 'Error al eliminar el producto' });
-    }
+    });
 });
 
 export default router;
