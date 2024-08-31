@@ -31,7 +31,7 @@ app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 
 app.get('/', (req, res) => {
-    res.send('Bienvenido');
+    res.send ('Bienvenido');
 });
 
 app.get('/home', async (req, res) => {
