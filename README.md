@@ -44,6 +44,6 @@ nodemon src/app.js
 **Home**: `http://localhost:8080/home` - Muestra lista de productos que ya estan y los creados.
 **Real-Time Products**: `http://localhost:8080/realtimeproducts` - Creacion de productos en tiempo real.
 
-**Para terminar de verificar que estan pueden ir al products.json que aparecen creados.
+**Para terminar de verificar que el producto se creo pueden ir al products.json que aparecen creados.
 
  
