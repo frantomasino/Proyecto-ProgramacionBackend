@@ -16,10 +16,9 @@ const app = express();
 const server = http.createServer(app);
 const io = new SocketIOServer(server);
 
- const MONGO_URI = 'mongodb+srv://franciscotomasino2:quilmes@cluster0.tpv8y.mongodb.net/ecommerce?retryWrites=true&w=majority';
+const MONGO_URI = 'mongodb+srv://franciscotomasino2:quilmes@cluster0.tpv8y.mongodb.net/ecommerce?retryWrites=true&w=majority';
 
-
- mongoose.connect(MONGO_URI, {
+mongoose.connect(MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }).then(() => {
@@ -27,8 +26,6 @@ const io = new SocketIOServer(server);
 }).catch(err => {
     console.error('Error al conectar a MongoDB Atlas:', err);
 });
-
-
 
 const productManager = new ProductManager(path.join(__dirname, 'data', 'products.json'));
 
@@ -53,13 +50,12 @@ app.get('/', (req, res) => {
 app.get('/home', async (req, res) => {
     try {
         const products = await productManager.getProducts(); 
-        res.render('home', { products }); 
+        res.render('home', { products });
     } catch (error) {
         console.error('Error fetching products:', error);
-        res.status(500).send('Error fetching products'); 
+        res.status(500).send('Error fetching products');
     }
 });
-
 
 app.get('/realtimeproducts', (req, res) => {
     res.render('realTimeProducts');
@@ -79,19 +75,18 @@ io.on('connection', (socket) => {
 
     socket.on('addProduct', async (product) => {
         try {
-            const newProduct = await productManager.addProduct(product);
-            io.emit('updateProducts', await productManager.getProducts()); 
+            await productManager.addProduct(product);
+            io.emit('updateProducts', await productManager.getProducts());
         } catch (error) {
             console.error('Error adding product:', error);
         }
     });
-    
 
     socket.on('deleteProduct', async (id) => {
         try {
             await productManager.deleteProduct(id);
             const products = await productManager.getProducts();
-            io.emit('updateProducts', products); 
+            io.emit('updateProducts', products);
         } catch (error) {
             console.error('Error deleting product:', error);
         }

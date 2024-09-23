@@ -1,51 +1,11 @@
 [
   {
-    "titulo": "palo de madera reves",
-    "precio": "1",
-    "stock": "1",
-    "categoria": "palos",
-    "descripcion": "Palo de madera para revés de alta calidad",
-    "id": 1
-  },
-  {
-    "titulo": "cubre grip",
-    "precio": "50.000",
-    "stock": "5",
-    "categoria": "accesorios",
-    "descripcion": "Grip que cubre y protege tu palo",
-    "id": 2
-  },
-  {
     "titulo": "palos de fibra",
     "precio": "780000",
     "stock": "70",
     "categoria": "palos",
     "descripcion": "palos marca adidas, talle 12",
     "id": 3
-  },
-  {
-    "titulo": "fu\\nda",
-    "precio": "78040",
-    "stock": "10",
-    "categoria": "fundas",
-    "descripcion": "funda con 2 compartimiento",
-    "id": 4
-  },
-  {
-    "titulo": "2",
-    "precio": "2",
-    "stock": "2",
-    "categoria": "palos",
-    "descripcion": "protector color azul ",
-    "id": 5
-  },
-  {
-    "titulo": "zapatillas adidas",
-    "precio": "780.000",
-    "stock": "2",
-    "categoria": "zapatillas",
-    "descripcion": "marca adidas hockey",
-    "id": 6
   },
   {
     "titulo": "palo de madera  reves",
@@ -56,11 +16,27 @@
     "id": 7
   },
   {
-    "titulo": "q",
-    "precio": "1",
-    "stock": "1",
-    "categoria": "palos",
-    "descripcion": "protector color azul ",
+    "titulo": "Funda Tk",
+    "precio": "150.000",
+    "stock": "10",
+    "categoria": "funda",
+    "descripcion": "Funda con dos compartimientos",
     "id": 8
+  },
+  {
+    "titulo": "zapatillas adidas",
+    "precio": "450.000",
+    "stock": "5",
+    "categoria": "Zapatillas ",
+    "descripcion": "Zapatillas para hockey",
+    "id": 9
+  },
+  {
+    "titulo": "Palo Adidas",
+    "precio": "450.000",
+    "stock": "5",
+    "categoria": "Palos",
+    "descripcion": "Palos Fibra, 50% carbon ",
+    "id": 10
   }
 ]

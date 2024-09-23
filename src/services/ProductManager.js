@@ -16,7 +16,6 @@ class ProductManager {
         }
     }
 
-    
     async addProduct(product) {
         try {
             const products = await this.getProducts();
@@ -30,7 +29,6 @@ class ProductManager {
         }
     }
 
-    
     async deleteProduct(id) {
         try {
             let products = await this.getProducts();

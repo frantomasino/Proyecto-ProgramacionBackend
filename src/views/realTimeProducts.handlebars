@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Productos en Tiempo Real</title>
- </head>
+</head>
 <body>
     <h1>Lista de Productos en Tiempo Real</h1>
     
-     <form id="productForm">
+    <form id="productForm">
         <input type="text" name="titulo" placeholder="Título" required />
         <input type="number" name="precio" placeholder="Precio" required />
         <input type="number" name="stock" placeholder="Stock" required />
@@ -17,13 +17,13 @@
         <button type="submit">Agregar Producto</button>
     </form>
 
-     <ul id="productList"></ul>
+    <ul id="productList"></ul>
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
         const socket = io();
 
-         socket.on('updateProducts', (products) => {
+        socket.on('updateProducts', (products) => {
             const productList = document.getElementById('productList');
             productList.innerHTML = '';  
 
@@ -34,14 +34,14 @@
                     <p>Precio: $${product.precio}</p>
                     <p>Stock: ${product.stock}</p>
                     <p>Categoría: ${product.categoria}</p>
-                    <p>Descripción: ${product.descripcion}</p> <!-- Mostrar la descripción -->
+                    <p>Descripción: ${product.descripcion}</p>
                 `;
 
-                 const deleteButton = document.createElement('button');
+                const deleteButton = document.createElement('button');
                 deleteButton.textContent = 'Eliminar';
                 deleteButton.classList.add('delete-product');  
                 deleteButton.onclick = () => {
-                    socket.emit('deleteProduct', product._id);
+                    socket.emit('deleteProduct', product.id);  
                 };
 
                 listItem.appendChild(deleteButton);
@@ -49,7 +49,7 @@
             });
         });
 
-         document.getElementById('productForm').addEventListener('submit', (e) => {
+        document.getElementById('productForm').addEventListener('submit', (e) => {
             e.preventDefault();
             const titulo = e.target.titulo.value;
             const precio = e.target.precio.value;
@@ -57,7 +57,7 @@
             const categoria = e.target.categoria.value;
             const descripcion = e.target.descripcion.value;  
 
-             socket.emit('addProduct', { titulo, precio, stock, categoria, descripcion }); 
+            socket.emit('addProduct', { titulo, precio, stock, categoria, descripcion });
             e.target.reset();
         });
     </script>
