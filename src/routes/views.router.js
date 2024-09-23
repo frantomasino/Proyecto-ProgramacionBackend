@@ -1,17 +1,17 @@
-import express from 'express';
-import path from 'path';
-import fs from 'fs/promises';
+import { Router } from 'express';
+import ProductManager from '../services/ProductManager.js';
 
-const router = express.Router();
+const router = Router();
+const productManager = new ProductManager();
 
-router.get('/home', async (req, res) => {
-  try {
-    const data = await fs.readFile(path.join(__dirname, '../data/products.json'), 'utf-8');
-    const products = JSON.parse(data);
-    res.render('home', { products });
-  } catch (err) {
-    res.status(500).send('Error reading products data.');
-  }
+router.get('/products', async (req, res) => {
+    try {
+        const products = await productManager.getProducts();
+        res.render('home', { products });
+    } catch (error) {
+        console.error('Error rendering products:', error);
+        res.status(500).send('Error rendering products');
+    }
 });
 
 export default router;

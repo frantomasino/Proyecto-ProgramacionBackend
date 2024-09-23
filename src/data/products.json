@@ -1,30 +1,66 @@
 [
   {
-    "id": 3,
-    "titulo": "Palo de hockey",
-    "description": "Camiseta de manga corta hecha con material transpirable.",
-    "code": "PAL001",
-    "precio": 29.99,
-    "stock": 350,
-    "categoria": "Ropa Deportiva",
-    "thumbnails": [
-      "https://firebasestorage.googleapis.com/v0/b/ecommerce-reactjs-350aa.appspot.com/o/palofibra3.webp?alt=media&token=26885d15-30e2-4149-b775-41aed5d7dedf",
-      "https://firebasestorage.googleapis.com/v0/b/ecommerce-reactjs-350aa.appspot.com/o/acccubre3.webp?alt=media&token=a312fdb2-f4a8-4a0d-b492-0328ffbf1ca3"
-    ],
-    "status": true
+    "titulo": "palo de madera reves",
+    "precio": "1",
+    "stock": "1",
+    "categoria": "palos",
+    "descripcion": "Palo de madera para revés de alta calidad",
+    "id": 1
   },
   {
-    "id": 4,
-    "titulo": "Funda Deportiva",
-    "description": "Mochila con múltiples compartimentos, ideal para llevar todo lo necesario al gimnasio.",
-    "code": "MOCH01",
-    "precio": 49.99,
-    "stock": 120,
-    "categoria": "Accesorios Deportivos",
-    "thumbnails": [
-      "https://firebasestorage.googleapis.com/v0/b/ecommerce-reactjs-350aa.appspot.com/o/funda6.webp?alt=media&token=83729868-28fd-4e0a-935d-7d43e81c40d1",
-      "https://firebasestorage.googleapis.com/v0/b/ecommerce-reactjs-350aa.appspot.com/o/acccanilleras1.webp?alt=media&token=8bcf6cca-5208-4e3b-a83b-b64c68631b9d"
-    ],
-    "status": true
+    "titulo": "cubre grip",
+    "precio": "50.000",
+    "stock": "5",
+    "categoria": "accesorios",
+    "descripcion": "Grip que cubre y protege tu palo",
+    "id": 2
+  },
+  {
+    "titulo": "palos de fibra",
+    "precio": "780000",
+    "stock": "70",
+    "categoria": "palos",
+    "descripcion": "palos marca adidas, talle 12",
+    "id": 3
+  },
+  {
+    "titulo": "fu\\nda",
+    "precio": "78040",
+    "stock": "10",
+    "categoria": "fundas",
+    "descripcion": "funda con 2 compartimiento",
+    "id": 4
+  },
+  {
+    "titulo": "2",
+    "precio": "2",
+    "stock": "2",
+    "categoria": "palos",
+    "descripcion": "protector color azul ",
+    "id": 5
+  },
+  {
+    "titulo": "zapatillas adidas",
+    "precio": "780.000",
+    "stock": "2",
+    "categoria": "zapatillas",
+    "descripcion": "marca adidas hockey",
+    "id": 6
+  },
+  {
+    "titulo": "palo de madera  reves",
+    "precio": "12321",
+    "stock": "45",
+    "categoria": "palos",
+    "descripcion": "protector color azul ",
+    "id": 7
+  },
+  {
+    "titulo": "q",
+    "precio": "1",
+    "stock": "1",
+    "categoria": "palos",
+    "descripcion": "protector color azul ",
+    "id": 8
   }
 ]

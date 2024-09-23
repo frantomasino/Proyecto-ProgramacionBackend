@@ -7,6 +7,7 @@ import { fileURLToPath } from 'url';
 import http from 'http';
 import { Server as SocketIOServer } from 'socket.io';
 import ProductManager from './services/ProductManager.js';
+import mongoose from 'mongoose';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -14,6 +15,21 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const server = http.createServer(app);
 const io = new SocketIOServer(server);
+
+ const MONGO_URI = 'mongodb+srv://franciscotomasino2:quilmes@cluster0.tpv8y.mongodb.net/ecommerce?retryWrites=true&w=majority';
+
+
+ mongoose.connect(MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+}).then(() => {
+    console.log('Conectado a MongoDB Atlas');
+}).catch(err => {
+    console.error('Error al conectar a MongoDB Atlas:', err);
+});
+
+
+
 const productManager = new ProductManager(path.join(__dirname, 'data', 'products.json'));
 
 app.engine('handlebars', engine({
@@ -31,18 +47,19 @@ app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 
 app.get('/', (req, res) => {
-    res.send ('Bienvenido');
+    res.send('Bienvenido');
 });
 
 app.get('/home', async (req, res) => {
     try {
-        const products = await productManager.getProducts();
-        res.render('home', { products });
+        const products = await productManager.getProducts(); 
+        res.render('home', { products }); 
     } catch (error) {
         console.error('Error fetching products:', error);
-        res.status(500).send('Error fetching products');
+        res.status(500).send('Error fetching products'); 
     }
 });
+
 
 app.get('/realtimeproducts', (req, res) => {
     res.render('realTimeProducts');
@@ -52,23 +69,29 @@ io.on('connection', (socket) => {
     console.log('Nuevo cliente conectado');
 
     socket.on('requestProducts', async () => {
-        const products = await productManager.getProducts();
-        socket.emit('updateProducts', products);
+        try {
+            const products = await productManager.getProducts();
+            socket.emit('updateProducts', products);
+        } catch (error) {
+            console.error('Error fetching products:', error);
+        }
     });
 
     socket.on('addProduct', async (product) => {
         try {
             const newProduct = await productManager.addProduct(product);
-            io.emit('updateProducts', await productManager.getProducts());
+            io.emit('updateProducts', await productManager.getProducts()); 
         } catch (error) {
             console.error('Error adding product:', error);
         }
     });
+    
 
     socket.on('deleteProduct', async (id) => {
         try {
             await productManager.deleteProduct(id);
-            io.emit('updateProducts', await productManager.getProducts());
+            const products = await productManager.getProducts();
+            io.emit('updateProducts', products); 
         } catch (error) {
             console.error('Error deleting product:', error);
         }

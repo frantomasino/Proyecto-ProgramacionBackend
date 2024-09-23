@@ -3,48 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real-Time Products</title>
-    <link rel="stylesheet" href="/styles/styles.css">
-</head>
+    <title>Productos en Tiempo Real</title>
+ </head>
 <body>
-<h1>Lista de Productos</h1>
+    <h1>Lista de Productos en Tiempo Real</h1>
     
-    <form id="productForm">
-        <input type="text" name="titulo" placeholder="Titulo" required />
+     <form id="productForm">
+        <input type="text" name="titulo" placeholder="Título" required />
         <input type="number" name="precio" placeholder="Precio" required />
         <input type="number" name="stock" placeholder="Stock" required />
-        <input type="text" name="categoria" placeholder="Categoria" required />
+        <input type="text" name="categoria" placeholder="Categoría" required />
+        <input type="text" name="descripcion" placeholder="Descripción" required />  
         <button type="submit">Agregar Producto</button>
     </form>
-    <ul id="productList"></ul>
+
+     <ul id="productList"></ul>
+
     <script src="/socket.io/socket.io.js"></script>
     <script>
         const socket = io();
 
-        socket.on('updateProducts', (products) => {
+         socket.on('updateProducts', (products) => {
             const productList = document.getElementById('productList');
-            productList.innerHTML = '';
+            productList.innerHTML = '';  
+
             products.forEach(product => {
                 const listItem = document.createElement('li');
-                listItem.textContent = `${product.titulo} - ${product.precio} - Stock: ${product.stock}`;
+                listItem.innerHTML = `
+                    <h2>${product.titulo}</h2>
+                    <p>Precio: $${product.precio}</p>
+                    <p>Stock: ${product.stock}</p>
+                    <p>Categoría: ${product.categoria}</p>
+                    <p>Descripción: ${product.descripcion}</p> <!-- Mostrar la descripción -->
+                `;
+
+                 const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Eliminar';
+                deleteButton.classList.add('delete-product');  
+                deleteButton.onclick = () => {
+                    socket.emit('deleteProduct', product._id);
+                };
+
+                listItem.appendChild(deleteButton);
                 productList.appendChild(listItem);
             });
         });
 
-        document.getElementById('productForm').addEventListener('submit', (event) => {
-            event.preventDefault();
-            const formData = new FormData(event.target);
-            const product = {
-                titulo: formData.get('titulo'),
-                precio: formData.get('precio'),
-                stock: formData.get('stock'),
-                categoria: formData.get('categoria')
-            };
-            socket.emit('addProduct', product);
-            event.target.reset();
-        });
+         document.getElementById('productForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const titulo = e.target.titulo.value;
+            const precio = e.target.precio.value;
+            const stock = e.target.stock.value;
+            const categoria = e.target.categoria.value;
+            const descripcion = e.target.descripcion.value;  
 
-         socket.emit('requestProducts');
+             socket.emit('addProduct', { titulo, precio, stock, categoria, descripcion }); 
+            e.target.reset();
+        });
     </script>
 </body>
 </html>

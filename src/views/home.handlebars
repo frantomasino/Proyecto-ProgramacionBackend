@@ -3,20 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="/styles/styles.css">
+    <title>Lista de Productos</title>
 </head>
 <body>
     <h1>Lista de Productos</h1>
-    <ul>
+    
+    <ul id="productList">
         {{#each products}}
-            <li>
-                <h2>{{this.titulo}}</h2>
-                <p>Precio: ${{this.precio}}</p>
-                <p>Stock: {{this.stock}}</p>
-                <img src="{{this.thumbnails.[0]}}" alt="{{this.title}}" style="max-width: 200px;">
-            </li>
+        <li>
+            <h2>{{this.titulo}}</h2>
+            <p>Precio: ${{this.precio}}</p>
+            <p>Stock: {{this.stock}}</p>
+            <p>Categoría: {{this.categoria}}</p>
+            <p>Descripción: {{this.descripcion}}</p>
+            <button data-id="{{this._id}}" class="add-to-cart">Agregar al carrito</button>
+            <button data-id="{{this._id}}" class="view-details">Ver detalles</button>
+        </li>
         {{/each}}
     </ul>
+
+     <div id="productModal" style="display: none;">
+        <div>
+            <span id="closeModal" style="cursor: pointer;">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <p id="modalPrice"></p>
+            <p id="modalStock"></p>
+            <p id="modalDescription"></p>
+        </div>
+    </div>
+
+     <script src="/socket.io/socket.io.js"></script>
+
+     <script>
+        const socket = io();
+
+         function showProductDetails(product) {
+            document.getElementById('modalTitle').innerText = product.titulo;
+            document.getElementById('modalPrice').innerText = `Precio: $${product.precio}`;
+            document.getElementById('modalStock').innerText = `Stock: ${product.stock}`;
+            document.getElementById('modalDescription').innerText = `Descripción: ${product.descripcion}`;
+            
+            const modal = document.getElementById('productModal');
+            modal.style.display = 'block';
+        }
+
+         document.getElementById('closeModal').addEventListener('click', () => {
+            document.getElementById('productModal').style.display = 'none';
+        });
+
+         socket.on('updateProducts', (products) => {
+            const productList = document.getElementById('productList');
+            productList.innerHTML = '';
+            products.forEach(product => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <h2>${product.titulo}</h2>
+                    <p>Precio: $${product.precio}</p>
+                    <p>Stock: ${product.stock}</p>
+                    <p>Categoría: ${product.categoria}</p>
+                    <p>Descripción: ${product.descripcion}</p>
+                    <button data-id="${product._id}" class="add-to-cart">Agregar al carrito</button>
+                    <button data-id="${product._id}" class="view-details">Ver detalles</button>
+                `;
+                productList.appendChild(listItem);
+            });
+
+             document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const productId = event.target.getAttribute('data-id');
+                    const cartId = 'tuCartId';  
+
+                    if (productId && cartId) {
+                        fetch(`/api/carts/${cartId}/product/${productId}`, { method: 'POST' })
+                            .then(response => response.json())
+                            .then(data => alert('Producto agregado al carrito'))
+                            .catch(error => console.error('Error:', error));
+                    } else {
+                        console.error('Faltan productId o cartId');
+                    }
+                });
+            });
+
+            document.querySelectorAll('.view-details').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const productId = event.target.getAttribute('data-id');
+                    const product = products.find(p => p._id === productId);
+                    if (product) {
+                        showProductDetails(product);
+                    }
+                });
+            });
+        });
+
+         socket.emit('requestProducts');
+    </script>
 </body>
 </html>
