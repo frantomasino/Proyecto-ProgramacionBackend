@@ -6,7 +6,7 @@ class ProductManager {
             const products = await Product.find();
             return products;
         } catch (error) {
-            throw new Error('Error fetching products: ' + error);
+            throw new Error('Error al obtener productos: ' + error.message);
         }
     }
 
@@ -15,15 +15,18 @@ class ProductManager {
             const newProduct = new Product(productData);
             await newProduct.save();
         } catch (error) {
-            throw new Error('Error adding product: ' + error);
+            throw new Error('Error al agregar producto: ' + error.message);
         }
     }
 
     async deleteProduct(id) {
         try {
-            await Product.findByIdAndDelete(id);
+            const deletedProduct = await Product.findByIdAndDelete(id);
+            if (!deletedProduct) {
+                throw new Error('Producto no encontrado');
+            }
         } catch (error) {
-            throw new Error('Error deleting product: ' + error);
+            throw new Error('Error al eliminar producto: ' + error.message);
         }
     }
 }

@@ -6,8 +6,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import http from 'http';
 import { Server as SocketIOServer } from 'socket.io';
-import ProductManager from './services/ProductManager.js';
-import './database.js';
+import './database.js';  
+import Product from './models/Product.js';  
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -15,8 +15,6 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const server = http.createServer(app);
 const io = new SocketIOServer(server);
-
-const productManager = new ProductManager(path.join(__dirname, 'data', 'products.json'));
 
 app.engine('handlebars', engine({
     defaultLayout: 'main',
@@ -36,9 +34,10 @@ app.get('/', (req, res) => {
     res.send('Bienvenido');
 });
 
+// Ruta para mostrar los productos en la vista 'home'
 app.get('/home', async (req, res) => {
     try {
-        const products = await productManager.getProducts(); 
+        const products = await Product.find(); // Obtiene los productos desde MongoDB
         res.render('home', { products });
     } catch (error) {
         console.error('Error fetching products:', error);
@@ -46,6 +45,7 @@ app.get('/home', async (req, res) => {
     }
 });
 
+// Ruta para la vista de productos en tiempo real
 app.get('/realtimeproducts', (req, res) => {
     res.render('realTimeProducts');
 });
@@ -53,29 +53,34 @@ app.get('/realtimeproducts', (req, res) => {
 io.on('connection', (socket) => {
     console.log('Nuevo cliente conectado');
 
+    // Enviar productos cuando se soliciten
     socket.on('requestProducts', async () => {
         try {
-            const products = await productManager.getProducts();
+            const products = await Product.find(); // Obtener productos desde MongoDB
             socket.emit('updateProducts', products);
         } catch (error) {
             console.error('Error fetching products:', error);
         }
     });
 
-    socket.on('addProduct', async (product) => {
+    // Agregar un nuevo producto y actualizar la lista de productos en tiempo real
+    socket.on('addProduct', async (productData) => {
         try {
-            await productManager.addProduct(product);
-            io.emit('updateProducts', await productManager.getProducts());
+            const newProduct = new Product(productData);
+            await newProduct.save(); // Guardar producto en MongoDB
+            const updatedProducts = await Product.find();
+            io.emit('updateProducts', updatedProducts);
         } catch (error) {
             console.error('Error adding product:', error);
         }
     });
 
+    // Eliminar un producto y actualizar la lista de productos en tiempo real
     socket.on('deleteProduct', async (id) => {
         try {
-            await productManager.deleteProduct(id);
-            const products = await productManager.getProducts();
-            io.emit('updateProducts', products);
+            await Product.findByIdAndDelete(id); // Eliminar producto desde MongoDB
+            const updatedProducts = await Product.find();
+            io.emit('updateProducts', updatedProducts);
         } catch (error) {
             console.error('Error deleting product:', error);
         }
