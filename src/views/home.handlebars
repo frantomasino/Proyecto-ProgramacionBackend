@@ -11,67 +11,61 @@
     <ul id="productList">
         {{#each products}}
         <li>
-            <h2>{{this.titulo}}</h2>
-            <p>Precio: ${{this.precio}}</p>
-            <p>Stock: {{this.stock}}</p>
-            <p>Categoría: {{this.categoria}}</p>
-            <p>Descripción: {{this.descripcion}}</p>
+            <h2>{{this.name}}</h2>
+            <p>Precio: ${{this.price}}</p>
+            <p>Descripción: {{this.description}}</p>
             <button data-id="{{this._id}}" class="add-to-cart">Agregar al carrito</button>
             <button data-id="{{this._id}}" class="view-details">Ver detalles</button>
         </li>
         {{/each}}
     </ul>
 
-     <div id="productModal" style="display: none;">
+    <div id="productModal" style="display: none;">
         <div>
             <span id="closeModal" style="cursor: pointer;">&times;</span>
             <h2 id="modalTitle"></h2>
             <p id="modalPrice"></p>
-            <p id="modalStock"></p>
             <p id="modalDescription"></p>
         </div>
     </div>
 
-     <script src="/socket.io/socket.io.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
 
-     <script>
+    <script>
         const socket = io();
 
-         function showProductDetails(product) {
-            document.getElementById('modalTitle').innerText = product.titulo;
-            document.getElementById('modalPrice').innerText = `Precio: $${product.precio}`;
-            document.getElementById('modalStock').innerText = `Stock: ${product.stock}`;
-            document.getElementById('modalDescription').innerText = `Descripción: ${product.descripcion}`;
+        function showProductDetails(product) {
+            document.getElementById('modalTitle').innerText = product.name;
+            document.getElementById('modalPrice').innerText = `Precio: $${product.price}`;
+            document.getElementById('modalDescription').innerText = `Descripción: ${product.description}`;
             
             const modal = document.getElementById('productModal');
             modal.style.display = 'block';
         }
 
-         document.getElementById('closeModal').addEventListener('click', () => {
+        document.getElementById('closeModal').addEventListener('click', () => {
             document.getElementById('productModal').style.display = 'none';
         });
 
-         socket.on('updateProducts', (products) => {
+        socket.on('updateProducts', (products) => {
             const productList = document.getElementById('productList');
             productList.innerHTML = '';
             products.forEach(product => {
                 const listItem = document.createElement('li');
                 listItem.innerHTML = `
-                    <h2>${product.titulo}</h2>
-                    <p>Precio: $${product.precio}</p>
-                    <p>Stock: ${product.stock}</p>
-                    <p>Categoría: ${product.categoria}</p>
-                    <p>Descripción: ${product.descripcion}</p>
+                    <h2>${product.name}</h2>
+                    <p>Precio: $${product.price}</p>
+                    <p>Descripción: ${product.description}</p>
                     <button data-id="${product._id}" class="add-to-cart">Agregar al carrito</button>
                     <button data-id="${product._id}" class="view-details">Ver detalles</button>
                 `;
                 productList.appendChild(listItem);
             });
 
-             document.querySelectorAll('.add-to-cart').forEach(button => {
+            document.querySelectorAll('.add-to-cart').forEach(button => {
                 button.addEventListener('click', (event) => {
                     const productId = event.target.getAttribute('data-id');
-                    const cartId = 'tuCartId';  
+                    const cartId = 'tuCartId';  // Asegúrate de que 'tuCartId' sea el ID correcto del carrito.
 
                     if (productId && cartId) {
                         fetch(`/api/carts/${cartId}/product/${productId}`, { method: 'POST' })
@@ -95,7 +89,7 @@
             });
         });
 
-         socket.emit('requestProducts');
+        socket.emit('requestProducts');
     </script>
 </body>
 </html>

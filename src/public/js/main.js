@@ -7,7 +7,7 @@ import { fileURLToPath } from 'url';
 import http from 'http';
 import { Server as SocketIOServer } from 'socket.io';
 import ProductManager from './services/ProductManager.js';
-import mongoose from 'mongoose';
+import './database.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -15,17 +15,6 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const server = http.createServer(app);
 const io = new SocketIOServer(server);
-
-const MONGO_URI = 'mongodb+srv://franciscotomasino2:quilmes@cluster0.tpv8y.mongodb.net/ecommerce?retryWrites=true&w=majority';
-
-mongoose.connect(MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-}).then(() => {
-    console.log('Conectado a MongoDB Atlas');
-}).catch(err => {
-    console.error('Error al conectar a MongoDB Atlas:', err);
-});
 
 const productManager = new ProductManager(path.join(__dirname, 'data', 'products.json'));
 
@@ -93,7 +82,7 @@ io.on('connection', (socket) => {
     });
 });
 
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 server.listen(PORT, () => {
     console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });

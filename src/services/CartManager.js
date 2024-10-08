@@ -1,7 +1,7 @@
-import fs from 'fs';
+ import fs from 'fs';
 import path from 'path';
 
-const cartsFilePath = path.resolve('data', 'carts.json');
+ const cartsFilePath = path.resolve('data', 'carts.json');
 
 class CartManager {
     async createCart() {
@@ -10,7 +10,7 @@ class CartManager {
         carts.push(newCart);
         await fs.promises.writeFile(cartsFilePath, JSON.stringify(carts, null, 2));
         return newCart;
-    }
+     }
 
     async getCarts() {
         try {
@@ -20,6 +20,6 @@ class CartManager {
             return [];
         }
     }
-}
+ }
 
-export default CartManager;
+ export default CartManager;
