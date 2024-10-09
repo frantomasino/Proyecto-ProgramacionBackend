@@ -65,7 +65,7 @@
             document.querySelectorAll('.add-to-cart').forEach(button => {
                 button.addEventListener('click', (event) => {
                     const productId = event.target.getAttribute('data-id');
-                    const cartId = 'tuCartId';  // Asegúrate de que 'tuCartId' sea el ID correcto del carrito.
+                    const cartId = 'tuCartId';  
 
                     if (productId && cartId) {
                         fetch(`/api/carts/${cartId}/product/${productId}`, { method: 'POST' })
