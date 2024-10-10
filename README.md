@@ -9,7 +9,9 @@ src/
 ├── routes/
 │   ├── products.router.js
 │   └── carts.router.js
-│   ├── views.router.js
+├── models/
+│   ├── Cart.js
+│   └── Product.js
 ├── services/
 │   ├── ProductManager.js
 │   └── CartManager.js
@@ -20,13 +22,13 @@ src/
 │   └── realTimeProducts.handlebars
 │
 └── app.js
-└── utils.js
+└── database.js
 │data/
 ├── products.json
 └── carrito.json
 ├public/
 └── js/
-│    └── index.js
+│    └── main.js
 ├── node_modules
 ├── package.json
 ├── package-lock.json
@@ -43,6 +45,8 @@ nodemon src/app.js
 
 **Home**: `http://localhost:8080/home` - Muestra lista de productos que ya estan y los creados.
 **Real-Time Products**: `http://localhost:8080/realtimeproducts` - Creacion de productos en tiempo real, con eliminancion para poder borrar algun producto. 
+
+**POSTMAN** Para crear productos en el backend se puede hacer desde el POSTMAN con GET - PUT - DELETE
 
 **Para terminar de verificar que el producto se creo pueden ir al products.json que aparecen creados.
 
