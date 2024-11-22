@@ -1,0 +1,37 @@
+<h1>Ruta Protegida</h1>
+<p id="protectedMessage">Cargando datos...</p>
+<button id="loadDataButton">Cargar Datos del Usuario</button>
+
+<script>
+  document.getElementById('loadDataButton').onclick = async () => {
+    const token = document.cookie.split('; ').find(row => row.startsWith('jwt=')).split('=')[1];
+
+    const response = await fetch('/api/sessions/current', {
+      method: 'GET',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+
+    const data = await response.json();
+
+    if (data.message) {
+      document.getElementById('protectedMessage').innerText = data.message;
+    } else {
+      document.getElementById('protectedMessage').innerText = `Welcome, ${data.first_name} ${data.last_name}`;
+    }
+  };
+  app.get('/protected', (req, res) => {
+  const token = req.cookies.jwt;
+  if (!token) {
+    return res.redirect('/login');
+  }
+
+  // Verifica el token
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.redirect('/login');
+    }
+    res.render('protected', { title: 'Ruta Protegida' });
+  });
+});
+
+</script>
