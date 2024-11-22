@@ -103,6 +103,41 @@ node src/app.js
  
 
 
+## Pasos para instalar y ejecutar
 
- 
- 
+
+1. Clonar el repositorio: 
+
+Clona este proyecto en tu máquina local usando:  git clone <URL_DEL_REPOSITORIO>
+
+
+
+2. Instalar dependencias
+
+Accede al directorio del proyecto e instala las dependencias con: cd <directorio_del_proyecto>
+npm install
+
+
+3. Configurar las variables de entorno
+
+Crea un archivo .env en la raíz del proyecto (o dentro de src, si el código está configurado para buscarlo ahí). Copia el siguiente contenido en el archivo .env y ajusta los valores según tu configuración:
+
+.env
+MONGO_URI=mongodb+srv://<usuario>:<contraseña>@<cluster>.mongodb.net/<base_de_datos>?retryWrites=true&w=majority
+PORT=8080
+JWT_SECRET=<clave_secreta>
+
+
+4. Ejecutar el servidor
+
+Inicia el servidor con:  node src/app.js
+
+
+Si todo está configurado correctamente, deberías ver en la consola:
+
+JWT_SECRET: <clave_secreta>
+MONGO_URI: <URI_de_MongoDB>
+Servidor corriendo en http://localhost:8080
+Conexión exitosa a MongoDB
+
+
