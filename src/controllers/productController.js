@@ -1,4 +1,3 @@
-// src/controllers/productController.js
 import Product from "../models/Product.js";
 
 // Función para crear un producto

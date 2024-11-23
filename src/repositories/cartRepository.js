@@ -7,5 +7,4 @@ export const CartRepository = {
     return newCart;
   },
   
-  // Otras funciones para actualizar, obtener, etc.
-};
+ };

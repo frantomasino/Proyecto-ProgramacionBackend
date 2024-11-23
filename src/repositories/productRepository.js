@@ -1,4 +1,3 @@
-// src/repositories/productRepository.js
 import Product from '../models/Product.js';
 
 class ProductRepository {

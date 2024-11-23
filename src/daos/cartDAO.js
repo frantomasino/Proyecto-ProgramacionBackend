@@ -23,6 +23,9 @@ class CartDAO {
      * @param {number} quantity - Cantidad del producto.
      * @returns {Object} - Carrito actualizado.
      */
+
+
+    
     async addProduct(cartId, productId, quantity) {
         try {
             const cart = await CartModel.findById(cartId);
